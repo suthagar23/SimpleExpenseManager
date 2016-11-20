@@ -25,12 +25,15 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.MyAccountDAO;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.MyTransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
 import static lk.ac.mrt.cse.dbs.simpleexpensemanager.Constants.EXPENSE_MANAGER;
@@ -39,6 +42,7 @@ import static lk.ac.mrt.cse.dbs.simpleexpensemanager.Constants.EXPENSE_MANAGER;
  */
 public class ExpenseLogsFragment extends Fragment {
     private ExpenseManager currentExpenseManager;
+    private MyTransactionDAO transactionDAO;
 
     public static ExpenseLogsFragment newInstance(ExpenseManager expenseManager) {
         ExpenseLogsFragment expenseLogsFragment = new ExpenseLogsFragment();
@@ -59,9 +63,15 @@ public class ExpenseLogsFragment extends Fragment {
 
         currentExpenseManager = (ExpenseManager) getArguments().get(EXPENSE_MANAGER);
         List<Transaction> transactionList = new ArrayList<>();
+        transactionDAO = new MyTransactionDAO(getActivity());
         if (currentExpenseManager != null) {
-            transactionList = currentExpenseManager.getTransactionLogs();
+            try {
+                transactionList = transactionDAO.getTransaction();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
+//        transactionList = currentExpenseManager.getTransactionLogs();
         generateTransactionsTable(rootView, logsTableLayout, transactionList);
         return rootView;
     }

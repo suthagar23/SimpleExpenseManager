@@ -26,6 +26,9 @@ import android.widget.EditText;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.MyAccountDAO;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 
 import static lk.ac.mrt.cse.dbs.simpleexpensemanager.Constants.EXPENSE_MANAGER;
 /**
@@ -39,12 +42,22 @@ public class AddAccountFragment extends Fragment implements View.OnClickListener
     private EditText initialBalance;
     private Button addAccount;
 
+
+    private Account account = null;
+    private MyAccountDAO accountDAO;
+
     public static AddAccountFragment newInstance(ExpenseManager expenseManager) {
         AddAccountFragment addAccountFragment = new AddAccountFragment();
         Bundle args = new Bundle();
         args.putSerializable(EXPENSE_MANAGER, expenseManager);
         addAccountFragment.setArguments(args);
         return addAccountFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        accountDAO = new MyAccountDAO(getActivity());
     }
 
     public AddAccountFragment() {
@@ -61,6 +74,7 @@ public class AddAccountFragment extends Fragment implements View.OnClickListener
         addAccount.setOnClickListener(this);
 
         currentExpenseManager = (ExpenseManager) getArguments().get(EXPENSE_MANAGER);
+        accountDAO = new MyAccountDAO(getActivity());
         return rootView;
     }
 
@@ -95,8 +109,12 @@ public class AddAccountFragment extends Fragment implements View.OnClickListener
                 }
 
                 if (currentExpenseManager != null) {
-                    currentExpenseManager.addAccount(accountNumStr, bankNameStr, accountHolderStr,
+//                    currentExpenseManager.addAccount(accountNumStr, bankNameStr, accountHolderStr,
+//                            Double.parseDouble(initialBalanceStr));
+                    Account account = new Account(accountNumStr, bankNameStr, accountHolderStr,
                             Double.parseDouble(initialBalanceStr));
+                            accountDAO.addAccount(account);
+
                 }
                 cleanUp();
                 break;

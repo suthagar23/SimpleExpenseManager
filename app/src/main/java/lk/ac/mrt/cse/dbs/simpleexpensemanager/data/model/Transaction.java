@@ -23,6 +23,9 @@ import java.util.Date;
  */
 public class Transaction {
     private Date date;
+    private String accountNo;
+    private ExpenseType expenseType;
+    private double amount;
 
     public Date getDate() {
         return date;
@@ -40,8 +43,15 @@ public class Transaction {
         this.accountNo = accountNo;
     }
 
-    public ExpenseType getExpenseType() {
-        return expenseType;
+    public String getExpenseType() {
+        switch (expenseType) {
+            case EXPENSE:
+                return "EXPENSE";
+            default:
+                return "INCOME";
+        }
+//        return expenseType;
+
     }
 
     public void setExpenseType(ExpenseType expenseType) {
@@ -56,9 +66,7 @@ public class Transaction {
         this.amount = amount;
     }
 
-    private String accountNo;
-    private ExpenseType expenseType;
-    private double amount;
+
 
     public Transaction(Date date, String accountNo,
                        ExpenseType expenseType, double amount) {
