@@ -1,0 +1,4 @@
+#Sun Nov 20 18:02:47 IST 2016
+base.0=C\:\\Users\\sutha.DESKTOP-QF7IRVN\\AndroidStudioProjects\\SimpleExpenseManager - Sutha\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\Users\\sutha.DESKTOP-QF7IRVN\\AndroidStudioProjects\\SimpleExpenseManager - Sutha\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
